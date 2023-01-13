@@ -5,6 +5,7 @@
 - [X] NVENC hardware encoding and splitting
 - [X] Record rosbag as MCAP file (parallel_recording/rosbag_galactic)
 - [ ] Parse video into MCAP message and write to it: https://mcap.dev/guides/python/ros2.html
+- [ ] (bonus) split rosbag file by time for data robustness
 
 *ROS2 and ROS are used interchangeably. Both refer to ROS2.*
 
