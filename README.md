@@ -44,7 +44,7 @@ parallel_recording/run_rosbag.sh
 
 After a minute or so, press CTRL+C to stop rosbag recording.
 
-## Post-facto Fusion
+### Post-facto Fusion
 
 If the above parallel recording step was successful, you will find a directory inside `output/` that contains a `.mp4` video file and `.db3` rosbag file. Note the absolute file paths.
 
