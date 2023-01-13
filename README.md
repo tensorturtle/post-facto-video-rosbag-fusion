@@ -1,4 +1,4 @@
-# Post-facto Video-ROSbag Fusion
+# Post-facto Video-Rosbag Fusion
 
 *ROS2 and ROS are used interchangeably. Both refer to ROS2 Humble.*
 
