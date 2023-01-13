@@ -1,6 +1,6 @@
 # Post-facto Video-ROSbag Fusion
 
-*ROS2 and ROS are used interchangeably. Both refer to ROS2 Humble.
+*ROS2 and ROS are used interchangeably. Both refer to ROS2 Humble.*
 
 **Problem**: ROS2 saves camera frames individually as still images when recording to a rosbag, which is very inefficient in both storage and processing.
 
