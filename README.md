@@ -1,6 +1,12 @@
 # Post-facto Video-Rosbag Fusion
 
-*ROS2 and ROS are used interchangeably. Both refer to ROS2 Humble.*
+## Work in Progress
+
+- [X] NVENC hardware encoding and splitting
+- [X] Record rosbag as MCAP file (parallel_recording/rosbag_galactic)
+- [ ] Parse video into MCAP message and write to it: https://mcap.dev/guides/python/ros2.html
+
+*ROS2 and ROS are used interchangeably. Both refer to ROS2.*
 
 **Problem**: ROS2 saves camera frames individually as still images when recording to a rosbag, which is very inefficient in both storage and processing.
 
