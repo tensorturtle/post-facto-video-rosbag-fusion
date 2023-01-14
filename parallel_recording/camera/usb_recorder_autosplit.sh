@@ -4,9 +4,11 @@
 # `ls /dev/video*` to see all available video devices
 CAMERA_PATH="/dev/video1"
 
+TIME_MS=$(date +%s%3N)
 # Set the output video file
-OUTPUT_DIR="../output"
-OUTPUT_FILE_PREFIX="usb_camera"
+OUTPUT_DIR="../../output"
+OUTPUT_FILE_PREFIX="usb-$TIME_MS-ms+"
+OUTPUT_FILE_SUFFIX="minutes"
 
 
 # Use `v4l2-ctl --device /dev/video0 --list-formats-ext` to find out below info:
@@ -38,5 +40,5 @@ gst-launch-1.0 \
     nvvidconv flip-method=$FLIP_METHOD ! \
     nvv4l2h264enc maxperf-enable=1 bitrate=$VIDEO_BITRATE ! \
     h264parse ! \
-    splitmuxsink location=$OUTPUT_DIR/$OUTPUT_FILE_PREFIX%03d.mp4 max-size-time=60000000000 -e
+    splitmuxsink location=$OUTPUT_DIR/$OUTPUT_FILE_PREFIX%03d$OUTPUT_FILE_SUFFIX.mp4 max-size-time=60000000000 -e
 

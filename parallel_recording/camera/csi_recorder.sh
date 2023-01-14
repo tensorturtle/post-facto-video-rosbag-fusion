@@ -27,11 +27,8 @@ VIDEO_BITRATE=8000000
 # 7 - upper left diagonal flip
 FLIP_METHOD=0
 
-# Set the video codec
-VIDEO_CODEC="h264"
 # Start recording using gstreamer
 # split video every 1 minute into different files
-
 # gstreamer command
 gst-launch-1.0 \
     nvarguscamerasrc sensor_id=$SENSOR_ID ! \

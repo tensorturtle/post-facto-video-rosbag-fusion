@@ -5,9 +5,13 @@
 # If two cameras are connected via CSI, set to 0 or 1.
 SENSOR_ID=0
 
+# Get time in milliseconds
+TIME_MS=$(date +%s%3N)
+
 # Set the output video file
-OUTPUT_DIR="../output"
-OUTPUT_FILE_PREFIX="output"
+OUTPUT_DIR="../../output"
+OUTPUT_FILE_PREFIX="csi-$TIME_MS-ms-"
+OUTPUT_FILE_SUFFIX="-minutes"
 
 
 # Use `v4l2-ctl --device /dev/video0 --list-formats-ext` to find out below info:
@@ -29,11 +33,9 @@ VIDEO_BITRATE=8000000
 # 7 - upper left diagonal flip
 FLIP_METHOD=0
 
-# Set the video codec
-VIDEO_CODEC="h264"
+
 # Start recording using gstreamer
 # split video every 1 minute into different files
-
 # gstreamer command
 gst-launch-1.0 \
     nvarguscamerasrc sensor_id=$SENSOR_ID ! \
@@ -41,5 +43,6 @@ gst-launch-1.0 \
     nvvidconv flip-method=$FLIP_METHOD ! \
     nvv4l2h264enc maxperf-enable=1 bitrate=$VIDEO_BITRATE ! \
     h264parse ! \
-    splitmuxsink location=$OUTPUT_DIR/$OUTPUT_FILE_PREFIX%03d.mp4 max-size-time=60000000000 -e
+    splitmuxsink location=$OUTPUT_DIR/$OUTPUT_FILE_PREFIX%03d$OUTPUT_FILE_SUFFIX.mp4 max-size-time=60000000000 -e
+
 
