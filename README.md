@@ -39,9 +39,9 @@ After a minute or so, press CTRL+C for both the camera and rosbag recording.
 
 ### Post-facto Fusion
 
-'''
+```
 ./run_docker_for_fuser.sh
-'''
+```
 
 In the created shell with ROS2 activated, run:
 
