@@ -1,11 +1,6 @@
 # Post-facto Video-Rosbag Fusion
 
-## Work in Progress
-
-- [X] NVENC hardware encoding and splitting
-- [X] Record rosbag as MCAP file (parallel_recording/rosbag_galactic)
-- [X] Parse video into MCAP message and write to it: https://mcap.dev/guides/python/ros2.html
-- [ ] (bonus) split rosbag file by time for data robustness
+## Introduction
 
 *ROS2 and ROS are used interchangeably. Both refer to ROS2.*
 
@@ -13,7 +8,12 @@
 
 **Solution**: Record camera frames as video file using NVIDIA Jetson's built-in hardware acceleration outside ROS. Record other information as usual using ROS. After the recording is finished, create a new rosbag by merging the videos and initial rosbag.
 
-[diagram]
+## Work in Progress
+
+- [X] NVENC hardware encoding and splitting
+- [X] Record rosbag as MCAP file (parallel_recording/rosbag_galactic)
+- [X] Parse video into MCAP message and write to it: https://mcap.dev/guides/python/ros2.html
+- [ ] (bonus) split rosbag file by time for data robustness
 
 ## Tutorial
 
