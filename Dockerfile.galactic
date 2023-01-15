@@ -5,5 +5,8 @@ RUN apt-get update && \
 	apt-get install -y --no-install-recommends ros-galactic-rosbag2-storage-mcap
 RUN echo 'source /opt/ros/galactic/setup.bash' >> /root/.bashrc
 
+# set bash as default shell
+SHELL ["/bin/bash", "-c"]
+
 WORKDIR /workspace
 

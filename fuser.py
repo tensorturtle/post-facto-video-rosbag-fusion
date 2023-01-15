@@ -118,7 +118,8 @@ def main(args):
                     if frame.shape[0] < args.target_resolution[0] or frame.shape[1] < args.target_resolution[1]:
                         print("WARNING: Target resolution is larger than frame resolution. Please check --target-resolution argument.")
                     
-                frame = cv2.resize(frame, (args.target_resolution[1], args.target_resolution[0]), interpolation=cv2.INTER_AREA)
+                if args.target_resolution != 'None':
+                    frame = cv2.resize(frame, (args.target_resolution[1], args.target_resolution[0]), interpolation=cv2.INTER_AREA)
 
                 if args.raw:
                     msg = form_image_msg(frame)
@@ -134,33 +135,46 @@ def main(args):
             else:
                 break
                 
-    # read a different bag and write to current merged bag
-    reader = rosbag2_py.SequentialReader()
-    reader.open(
-        rosbag2_py.StorageOptions(uri=args.bag, storage_id="mcap"),
-        rosbag2_py.ConverterOptions(
-            input_serialization_format="cdr",
-            output_serialization_format="cdr",
-        ),
-    )
+    # read existing bags copy it to the above created bag
 
-    topics = []
+    # get directories within args.bag directory
+    bag_sessions = glob.glob(args.bag + "/*/")
 
-    topic_types = reader.get_all_topics_and_types()
+    # get (time-split) bag files within each session directory
+    bag_files = []
+    for session in bag_sessions:
+        bag_files += glob.glob(session + "/*.mcap")
 
-    while reader.has_next():
-        topic, msg, timestamp = reader.read_next()
-        if topic not in topics:
-            topics.append(topic)
-            writer.create_topic(
-                rosbag2_py.TopicMetadata(
-                    name=topic,
-                    type=typename(topic, topic_types),
-                    serialization_format="cdr",
+    print("Bag files: ", bag_files)
+
+    for i, bag_file in enumerate(bag_files):
+        print(f"Processing {i}/{len(bag_files)} bags", end='\r')
+        reader = rosbag2_py.SequentialReader()
+        reader.open(
+            rosbag2_py.StorageOptions(uri=bag_file, storage_id="mcap"),
+            rosbag2_py.ConverterOptions(
+                input_serialization_format="cdr",
+                output_serialization_format="cdr",
+            ),
+        )
+
+        topics = []
+
+        topic_types = reader.get_all_topics_and_types()
+
+        while reader.has_next():
+            topic, msg, timestamp = reader.read_next()
+            if topic not in topics:
+                topics.append(topic)
+                writer.create_topic(
+                    rosbag2_py.TopicMetadata(
+                        name=topic,
+                        type=typename(topic, topic_types),
+                        serialization_format="cdr",
+                    )
                 )
-            )
-        print("Reading from bag, timestap: ", timestamp, " topic: ", topic)
-        writer.write(topic, msg, timestamp)
+            print("Reading from bag, timestap: ", timestamp, " topic: ", topic)
+            writer.write(topic, msg, timestamp)
 
     del writer
 
@@ -176,8 +190,8 @@ def typename(topic_name, topic_types):
 if __name__ == "__main__":
     # parse args
     parser = argparse.ArgumentParser(description='fuse.py')
-    parser.add_argument('--bag', help='path to input bag file')
-    parser.add_argument('--mp4', help='path to directory containing input mp4 videos')
+    parser.add_argument('--bag', help='path to directory containing rosbags', default='/output/rosbag')
+    parser.add_argument('--mp4', help='path to directory containing input mp4 videos', default='/output/video')
     parser.add_argument('--output', help='path to output bag file', default='/output/fused_bag.mcap')
     parser.add_argument('--topic-name', help='name of topic to write to', default='/image/postfacto/cam0')
     parser.add_argument('--raw', help='do not use jpeg compression', action='store_true', default=False)

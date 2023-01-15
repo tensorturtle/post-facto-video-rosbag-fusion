@@ -6,9 +6,11 @@ CAMERA_PATH="/dev/video1"
 
 TIME_MS=$(date +%s%3N)
 # Set the output video file
-OUTPUT_DIR="../../output"
-OUTPUT_FILE_PREFIX="usb-$TIME_MS-ms+"
-OUTPUT_FILE_SUFFIX="minutes"
+OUTPUT_DIR="../output/video"
+OUTPUT_FILE_PREFIX="usb-$TIME_MS-ms-"
+OUTPUT_FILE_SUFFIX="-minutes"
+
+mkdir -p $OUTPUT_DIR
 
 
 # Use `v4l2-ctl --device /dev/video0 --list-formats-ext` to find out below info:

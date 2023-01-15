@@ -5,5 +5,6 @@ sudo docker run \
 	--rm \
 	--network host \
 	-v ${PWD}:/workspace \
-	-v /home/boreal/Repos/post-facto-video-rosbag-fusion/output:/output \
-	galactic-ros-mcap:latest
+	-v ${PWD}/output:/output \
+	galactic-ros-mcap:latest \
+	/workspace/record_topics.sh
