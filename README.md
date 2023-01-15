@@ -1,14 +1,5 @@
 # Post-facto Video-Rosbag Fusion
 
-## Work in Progress
-
-- [X] NVENC hardware encoding and splitting
-- [X] Record rosbag as MCAP file (parallel_recording/rosbag_galactic)
-- [X] Parse video into MCAP message and write to it: https://mcap.dev/guides/python/ros2.html
-- [X] (bonus) split rosbag file by time for data robustness
-- [ ] Desktop Dockerfile for ROS2 for faster fusing. (Currently only works on Jetson)
-- [ ] May 2023: ROS2 Iron release with MCAP as default. Removes need for customized Dockerfile.
-
 **Problem**: ROS2 saves camera frames individually as still images when recording to a rosbag, which is very inefficient in both storage and processing.
 
 **Solution**: Record camera frames as video file using NVIDIA Jetson's built-in hardware acceleration outside ROS. Record other information as usual using ROS. After the recording is finished, create a new rosbag by merging the videos and initial rosbag.
@@ -61,3 +52,7 @@ python3 fuser.py
 This will create a new single rosbag file in `output/` directory which contains both the video and the ROS topics.
 
 There are several options for `fuser.py` to help reduce storage, for example. Run `python3 fuser.py --help` to see them.
+
+## Todo
+- [ ] Desktop Dockerfile for ROS2 for faster fusing. (Currently only works on Jetson)
+- [ ] May 2023: ROS2 Iron release with MCAP as default. Removes need for customized Dockerfile.
