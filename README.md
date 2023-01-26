@@ -4,6 +4,10 @@
 
 **Solution**: Record camera frames as video file using NVIDIA Jetson's built-in hardware acceleration outside ROS. Record other information as usual using ROS. After the recording is finished, create a new rosbag by merging the videos and initial rosbag.
 
+This repository provides a minimal implmentation.
+
+See [borealbikes-dev/combo-rosbag-fuser](https://github.com/borealbikes-dev/combo-rosbag-fuser) for a production deployment of this idea.
+
 ## Tutorial
 
 ### Prerequisites
